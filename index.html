@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoGlobe - سوق السيارات العالمي</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f8fd;color:#18314d}
+header{background:white;padding:20px 7%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px #ddd}
+.logo{font-size:27px;font-weight:bold;color:#0755a5}
+nav a{margin:10px;text-decoration:none;color:#18314d}
+.hero{background:linear-gradient(120deg,#082b52,#0874c9);color:white;text-align:center;padding:75px 20px}
+.hero h1{font-size:38px}
+.hero p{font-size:19px;line-height:1.8}
+button{background:#0874c9;color:white;border:0;padding:13px 23px;border-radius:8px;cursor:pointer}
+main{max-width:1100px;margin:35px auto;padding:15px}
+h2{color:#0755a5}
+.search,.form{background:white;padding:22px;border-radius:12px;margin-bottom:25px}
+input,select{padding:12px;margin:5px;border:1px solid #ccd8e5;border-radius:7px}
+.cars{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.car{background:white;border-radius:12px;padding:18px;box-shadow:0 2px 12px #dce5ef}
+.car h3{color:#0755a5}
+.price{font-weight:bold;font-size:20px}
+footer{text-align:center;background:#082b52;color:white;padding:25px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">AutoGlobe 🌍</div>
+<nav>
+<a href="#cars">السيارات</a>
+<a href="#sell">أضف سيارة</a>
+</nav>
+</header>
+
+<section class="hero">
+<h1>ابحث عن سيارة أحلامك بالسعر المناسب لك.</h1>
+<p>سوق عالمي يجمع مشتري السيارات وبائعيها من مختلف الدول.</p>
+<a href="#cars"><button>اكتشف السيارات</button></a>
+</section>
+
+<main>
+<section class="search" id="cars">
+<h2>ابحث عن سيارتك</h2>
+<input id="search" placeholder="اكتب اسم السيارة" oninput="showCars()">
+<div class="cars" id="carList"></div>
+</section>
+
+<section class="form" id="sell">
+<h2>أضف إعلان سيارتك</h2>
+<input id="brand" placeholder="ماركة السيارة">
+<input id="model" placeholder="الموديل">
+<input id="price" type="number" placeholder="السعر بالريال العماني">
+<button onclick="addCar()">إضافة الإعلان</button>
+<p>هذه نسخة تجريبية، والإعلانات لا تُحفظ بشكل دائم بعد إغلاق الصفحة.</p>
+</section>
+</main>
+
+<footer>© 2026 AutoGlobe - جميع الحقوق محفوظة</footer>
+
+<script>
+let cars=[
+{brand:"Toyota",model:"Camry",price:6500},
+{brand:"BMW",model:"Series 3",price:9200},
+{brand:"Mercedes",model:"C-Class",price:11000}
+];
+
+function showCars(){
+let q=document.getElementById("search").value.toLowerCase();
+document.getElementById("carList").innerHTML=cars
+.filter(c=>(c.brand+" "+c.model).toLowerCase().includes(q))
+.map(c=>`<div class="car"><h3>${c.brand} ${c.model}</h3><p class="price">${c.price.toLocaleString()} ر.ع</p></div>`)
+.join("");
+}
+
+function addCar(){
+let brand=document.getElementById("brand").value.trim();
+let model=document.getElementById("model").value.trim();
+let price=Number(document.getElementById("price").value);
+if(!brand||!model||price<=0){alert("أكمل بيانات السيارة والسعر");return;}
+cars.push({brand,model,price});
+showCars();
+alert("تمت إضافة السيارة في المعاينة");
+}
+showCars();
+</script>
+</body>
+</html>
